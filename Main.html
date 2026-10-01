@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Filippo Pesce – Writing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1F3F6;--fg:#1B2233;--muted:#5C6578;--line:#D5DAE3;--accent:#2B47D6;
+--head:"Bricolage Grotesque",system-ui,sans-serif;--body:"Newsreader",Georgia,serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161F;--fg:#E7EAF1;--muted:#98A1B5;--line:#2A3142;--accent:#8EA2FF}}
+:root[data-theme="dark"]{--bg:#12161F;--fg:#E7EAF1;--muted:#98A1B5;--line:#2A3142;--accent:#8EA2FF}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:20px/1.65 var(--body)}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.5rem}
+header{padding:5rem 0 3rem}
+h1{font:700 clamp(2.6rem,9vw,4.8rem)/1 var(--head);letter-spacing:-.03em;margin:0 0 1.25rem}
+h1 a{color:inherit;text-decoration:none}
+.intro{max-width:34rem;color:var(--muted);margin:0}
+nav{display:flex;gap:1.5rem;margin-top:1.75rem;font:500 1rem var(--head)}
+nav a{text-decoration:none;border-bottom:2px solid var(--line)}
+nav a:hover{border-color:var(--accent)}
+h2{font:700 1.5rem var(--head);margin:0 0 1rem;letter-spacing:-.01em}
+.list{list-style:none;margin:0 0 4rem;padding:0;border-top:1px solid var(--line)}
+.list li{border-bottom:1px solid var(--line)}
+.list a{display:grid;grid-template-columns:7.5rem 1fr;gap:.25rem 1.5rem;padding:1.4rem 0;text-decoration:none;color:inherit}
+.list time{color:var(--muted);font-size:.95rem;padding-top:.35rem}
+.list h3{font:700 1.35rem/1.25 var(--head);margin:0 0 .3rem}
+.list a:hover h3{color:var(--accent)}
+.list p{margin:0;color:var(--muted);font-size:1rem;line-height:1.5}
+#about{margin-bottom:4rem}
+#about p{margin:0 0 1rem}
+footer{border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--muted);font-size:.95rem}
+.post h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.08}
+.post .date{color:var(--muted);font-size:.95rem;margin:0 0 2.5rem}
+.post .body p{margin:0 0 1.3rem}
+.post .body h2{margin-top:2.2rem}
+.back{font:500 1rem var(--head);display:inline-block;margin:3rem 0 2rem}
+.theme{background:none;border:1px solid var(--line);color:var(--fg);border-radius:99px;padding:.3rem .9rem;font:500 .9rem var(--head);cursor:pointer;margin-top:1rem}
+@media (max-width:560px){body{font-size:18px}.list a{grid-template-columns:1fr}header{padding-top:3rem}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+/* ---- EDIT THIS SECTION ---- */
+const SITE = {
+  name: "Filippo Pesce",
+  tagline: "I write about the things I'm learning and making. Replace this line with one sentence about you.",
+  about: [
+    "Write two or three short paragraphs about yourself here: what you do, what you care about, and what readers can expect.",
+    "Add a line about how people can reach you."
+  ],
+  email: "filippopesce99@gmail.com",
+  links: [["GitHub","https://github.com/SmoothManifold99"],["LinkedIn","www.linkedin.com/in/filippo-pesce-2233471b6"]]
+};
+const ARTICLES = [
+  {id:"first-article", date:"2026-09-20", title:"A first article: why I started writing", summary:"A short note on what this site is for and what I plan to publish here.",
+   body:"<p>This is where your article text goes. Each paragraph is wrapped in a p tag.</p><h2>Add sections</h2><p>Use h2 tags for subheadings. Edit, delete or duplicate these entries in the ARTICLES list at the top of the script.</p>"},
+  {id:"second-article", date:"2026-08-02", title:"Notes on a project I'm working on", summary:"What I built, what went wrong, and what I would do differently.",
+   body:"<p>Replace this text with your own article. Newest articles should go first in the list.</p>"},
+  {id:"third-article", date:"2026-06-14", title:"Three things I changed my mind about", summary:"A short list of opinions I used to hold and why they shifted.",
+   body:"<p>Replace this text with your own article.</p>"}
+];
+/* ---- END EDIT ---- */
+
+const app = document.getElementById("app");
+const fmt = d => new Date(d+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function head(){
+  return `<header><h1><a href="#">${esc(SITE.name)}</a></h1><p class="intro">${esc(SITE.tagline)}</p>
+  <nav><a href="#writing">Writing</a><a href="#about">About</a><a href="mailto:${esc(SITE.email)}">Email</a></nav></header>`;
+}
+function foot(){
+  const links = SITE.links.map(([n,u])=>`<a href="${esc(u)}" rel="noopener">${esc(n)}</a>`).join(" &nbsp; ");
+  return `<footer>${links}<br><button class="theme" id="theme">Switch light/dark</button></footer>`;
+}
+function home(){
+  app.innerHTML = head() + `<main><section id="writing"><h2>Writing</h2><ul class="list">` +
+    ARTICLES.map(a=>`<li><a href="#/${a.id}"><time datetime="${a.date}">${fmt(a.date)}</time><div><h3>${esc(a.title)}</h3><p>${esc(a.summary)}</p></div></a></li>`).join("") +
+    `</ul></section><section id="about"><h2>About</h2>${SITE.about.map(p=>`<p>${esc(p)}</p>`).join("")}</section></main>` + foot();
+}
+function post(a){
+  app.innerHTML = `<main class="post"><a class="back" href="#writing">Back to all writing</a><h1>${esc(a.title)}</h1><p class="date">${fmt(a.date)}</p><div class="body">${a.body}</div><a class="back" href="#writing">Back to all writing</a></main>` + foot();
+  document.title = a.title + " – " + SITE.name;
+}
+function route(){
+  const h = location.hash;
+  const a = h.startsWith("#/") && ARTICLES.find(x=>x.id===h.slice(2));
+  document.title = SITE.name + " – Writing";
+  if(a){ post(a); window.scrollTo(0,0); }
+  else { home(); const t = h.slice(1); const el = t && document.getElementById(t); el ? el.scrollIntoView() : window.scrollTo(0,0); }
+  const b = document.getElementById("theme");
+  b.onclick = ()=>{ const r=document.documentElement; const dark = r.dataset.theme ? r.dataset.theme==="dark" : matchMedia("(prefers-color-scheme:dark)").matches; r.dataset.theme = dark?"light":"dark"; };
+}
+addEventListener("hashchange",route);
+route();
+</script>
+</body>
+</html>
